@@ -308,7 +308,7 @@ Melakukan restart sevice bind9 dengan `service bind9 restart`
 ### SOAL 8
 Setelah melakukan konfigurasi server, maka dilakukan konfigurasi Webserver. Pertama dengan webserver `www.franky.yyy.com.` Pertama, luffy membutuhkan webserver dengan DocumentRoot pada `/var/www/franky.yyy.com.`  
   
-### Jawaban Soal 6  
+### Jawaban Soal 8     
 **Client Loguetown**   
 Melakukan `apt-get update` dan menginstall lynx dengan cara    
 ```
@@ -316,7 +316,7 @@ apt-get update
 apt-get install lynx -y
 ```
   
-**Server Skypie*
+**Server Skypie**      
 Melakukan instalasi Apache dengan cara
 ```
 apt-get install apache2 -y
@@ -350,8 +350,189 @@ service apache2 restart
   
 #### TESTING  
 
+### SOAL 9
+Setelah itu, Luffy juga membutuhkan agar url `www.franky.yyy.com/index.php/home` dapat menjadi menjadi `www.franky.yyy.com/home.`
+
+### Jawaban Soal 9
+**Server Skypie**     
+konfigurasi file `/var/www/franky.t07.com/.htaccess` dengan    
+```
+a2enmod rewrite
+service apache2 restart
+echo "
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule (.*) /index.php/\$1 [L]
+```
+konfigurasi file `/etc/apache2/sites-available/franky.t07.com.conf` dengan  
+```
+echo "
+<VirtualHost *:80>
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/franky.t07.com
+        ServerName franky.t07.com
+        ServerAlias www.franky.t07.com
+
+        ErrorLog \${APACHE_LOG_DIR}/error.log
+        CustomLog \${APACHE_LOG_DIR}/access.log combined
+
+        <Directory /var/www/franky.t07.com>
+                Options +FollowSymLinks -Multiviews
+                AllowOverride All
+        </Directory>
+</VirtualHost>
+"
+```
+Melakukan restart service apache2 dengan `service apache2 restart`    
+
+#### TESTING
+
+### SOAL 10
+Setelah itu, pada subdomain `www.super.franky.yyy.com`, Luffy membutuhkan penyimpanan aset yang memiliki DocumentRoot pada `/var/www/super.franky.yyy.com`
+
+### Jawaban Soal 10
+**Server Skypie**    
+konfigurasi file `/etc/apache2/sites-available/super.franky.t07.com.conf` dengan  
+```
+echo "
+<VirtualHost *:80>
+
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/super.franky.t07.com
+        ServerName super.franky.t07.com
+        ServerAlias www.super.franky.t07.com
+
+        ErrorLog \${APACHE_LOG_DIR}/error.log
+        CustomLog \${APACHE_LOG_DIR}/access.log combined
+
+        <Directory /var/www/franky.t07.com>
+                Options +FollowSymLinks -Multiviews
+                AllowOverride All
+        </Directory>
+</VirtualHost>
+"
+```
+Lalu lakukan
+```
+a2ensite super.franky.t07.com
+mkdir /var/www/super.franky.t07.com
+cp -r /root/Praktikum-Modul-2-Jarkom/super.franky/. /var/www/super.franky.t07.com
+service apache2 restart
+```
+konfigurasi file `/var/www/super.franky.t07.com/index.php` dengan `echo "<?php echo 'yes nomor 10' ?>"`    
+
+#### TESTING
+
+### SOAL 11
+Akan tetapi, pada folder `/public`, Luffy ingin hanya dapat melakukan directory listing saja   
+
+### Jawaban Soal 11
+**Server Skypie**    
+konfigurasi file `/etc/apache2/sites-available/super.franky.t07.com.conf` dengan  
+```
+echo "
+<VirtualHost *:80>
+
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/super.franky.t07.com
+        ServerName super.franky.t07.com
+        ServerAlias www.super.franky.t07.com
+
+        <Directory /var/www/super.franky.t07.com/public>
+                Options +Indexes
+        </Directory>
+
+        ErrorLog \${APACHE_LOG_DIR}/error.log
+        CustomLog \${APACHE_LOG_DIR}/access.log combined
+
+        <Directory /var/www/franky.t07.com>
+                Options +FollowSymLinks -Multiviews
+                AllowOverride All
+        </Directory>
+</VirtualHost>
+"
+```     
+Melakukan restart service apache2 dengan `service apache2 restart`    
+
+#### TESTING
+
+### SOAL 12
+Tidak hanya itu, Luffy juga menyiapkan error file `404.html` pada folder `/error` untuk mengganti error kode pada apache 
+
+### Jawaban Soal 12
+**Server Skypie**    
+konfigurasi file `/etc/apache2/sites-available/super.franky.t07.com.conf` dengan  
+```
+echo "
+<VirtualHost *:80>
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/super.franky.t07.com
+        ServerName super.franky.t07.com
+        ServerAlias www.super.franky.t07.com
+
+        ErrorDocument 404 /error/404.html
+        ErrorDocument 500 /error/404.html
+        ErrorDocument 502 /error/404.html
+        ErrorDocument 503 /error/404.html
+        ErrorDocument 504 /error/404.html
+
+        <Directory /var/www/super.franky.t07.com/public>
+                Options +Indexes
+        </Directory>
+
+        ErrorLog \${APACHE_LOG_DIR}/error.log
+        CustomLog \${APACHE_LOG_DIR}/access.log combined
+
+        <Directory /var/www/franky.t07.com>
+                Options +FollowSymLinks -Multiviews
+                AllowOverride All
+        </Directory>
+</VirtualHost>
+" 
+```     
+Melakukan restart service apache2 dengan `service apache2 restart`   
+
+#### TESTING
+
+### SOAL 13
+Luffy juga meminta Nami untuk dibuatkan konfigurasi virtual host. Virtual host ini bertujuan untuk dapat mengakses file asset `www.super.franky.yyy.com/public/js` menjadi `www.super.franky.yyy.com/js`
+
+### Jawaban Soal 13
+**Server Skypie**    
+konfigurasi file `/etc/apache2/sites-available/super.franky.t07.com.conf` dengan  
+```
+echo "
+<VirtualHost *:80>
+
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/super.franky.t07.com
+        ServerName super.franky.t07.com
+        ServerAlias www.super.franky.t07.com
+
+        ErrorDocument 404 /error/404.html
+        ErrorDocument 500 /error/404.html
+        ErrorDocument 502 /error/404.html
+        ErrorDocument 503 /error/404.html
+        ErrorDocument 504 /error/404.html
+
+        <Directory /var/www/super.franky.t07.com/public>
+                Options +Indexes
+        </Directory>
+
+        Alias \"/js\" \"/var/www/super.franky.t07.com/public/js\"
 
 
+        ErrorLog \${APACHE_LOG_DIR}/error.log
+        CustomLog \${APACHE_LOG_DIR}/access.log combined
 
+        <Directory /var/www/franky.t07.com>
+                Options +FollowSymLinks -Multiviews
+                AllowOverride All
+        </Directory>
+</VirtualHost>
+"
+```     
+Melakukan restart service apache2 dengan `service apache2 restart`   
 
-
+#### TESTING     
