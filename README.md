@@ -535,4 +535,203 @@ echo "
 ```     
 Melakukan restart service apache2 dengan `service apache2 restart`   
 
+#### TESTING    
+
+### SOAL 14
+Dan Luffy meminta untuk web `www.general.mecha.franky.yyy.com` hanya bisa diakses dengan port 15000 dan port 15500
+
+### Jawaban Soal 14
+**Server Skypie**    
+konfigurasi file `/etc/apache2/sites-available/general.mecha.franky.t07.com.conf` dengan  
+```
+echo "
+<VirtualHost *:15000>
+
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/general.mecha.franky.t07.com
+        ServerName general.mecha.franky.t07.com
+        ServerAlias www.general.mecha.franky.t07.com
+
+
+        ErrorLog \${APACHE_LOG_DIR}/error.log
+        CustomLog \${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+<VirtualHost *:15500>        
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/general.mecha.franky.t07.com
+        ServerName general.mecha.franky.t07.com
+        ServerAlias www.general.mecha.franky.t07.com
+        
+
+        ErrorLog \${APACHE_LOG_DIR}/error.log
+        CustomLog \${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+"
+```     
+Lalu lakukan
+```
+a2ensite general.mecha.franky.t07.com
+service apache2 restart
+mkdir /var/www/general.mecha.franky.t07.com
+cp -r /root/Praktikum-Modul-2-Jarkom/general.mecha.franky/. /var/www/general.mecha.franky.t07.com/
+```
+konfigurasi file `/var/www/general.mecha.franky.t07.com/index.php` dengan     
+```
+echo "
+<?php
+    echo 'selamat 14';
+?>
+"
+```
+konfigurasi file `/etc/apache2/ports.conf` dengan     
+```
+echo "
+# If you just change the port or add more ports here, you will likely also
+# have to change the VirtualHost statement in
+# /etc/apache2/sites-enabled/000-default.conf
+
+Listen 80
+Listen 15000
+Listen 15500
+<IfModule ssl_module>
+        Listen 443
+</IfModule>
+
+<IfModule mod_gnutls.c>
+        Listen 443
+</IfModule>
+" 
+```    
+Melakukan restart service apache2 dengan `service apache2 restart`   
+
+#### TESTING   
+
+### SOAL 15
+dengan authentikasi username luffy dan password onepiece dan file di `/var/www/general.mecha.franky.yyy`
+
+### Jawaban Soal 15   
+**Server Skypie**     
+Jalankan Command `htpasswd -c -b /etc/apache2/.htpasswd luffy onepiece`    
+konfigurasi file `/etc/apache2/sites-available/general.mecha.franky.t07.com.conf` dengan     
+```
+echo "
+<VirtualHost *:15000>
+
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/general.mecha.franky.t07.com
+        ServerName general.mecha.franky.t07.com
+        ServerAlias www.general.mecha.franky.t07.com
+
+        <Directory \"/var/www/general.mecha.franky.t07.com\">
+                AuthType Basic
+                AuthName \"Restricted Content\"
+                AuthUserFile /etc/apache2/.htpasswd
+                Require valid-user
+        </Directory>
+
+        ErrorLog \${APACHE_LOG_DIR}/error.log
+        CustomLog \${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+<VirtualHost *:15500>        
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/general.mecha.franky.t07.com
+        ServerName general.mecha.franky.t07.com
+        ServerAlias www.general.mecha.franky.t07.com
+        
+        <Directory \"/var/www/general.mecha.franky.t07.com\">
+                AuthType Basic
+                AuthName \"Restricted Content\"
+                AuthUserFile /etc/apache2/.htpasswd
+                Require valid-user
+        </Directory>
+        
+        ErrorLog \${APACHE_LOG_DIR}/error.log
+        CustomLog \${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+"
+```    
+Melakukan restart service apache2 dengan `service apache2 restart`   
+
+#### TESTING     
+
+### SOAL 16
+Dan setiap kali mengakses IP Skypie akan diahlikan secara otomatis ke `www.franky.yyy.com`
+
+### Jawaban Soal 16  
+**Server Skypie**   
+konfigurasi file `/etc/apache2/sites-available/000-default.conf` dengan     
+```
+echo "
+<VirtualHost *:80>
+
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/html
+
+        RewriteEngine On
+        RewriteCond %{HTTP_HOST} !^franky.t07.com$
+        RewriteRule /.* http://franky.t07.com/ [R]
+
+        ErrorLog \${APACHE_LOG_DIR}/error.log
+        CustomLog \${APACHE_LOG_DIR}/access.log combined
+
+</VirtualHost>
+"
+```    
+Melakukan restart service apache2 dengan `service apache2 restart`  
+
+#### TESTING     
+
+### SOAL 17
+Dikarenakan Franky juga ingin mengajak temannya untuk dapat menghubunginya melalui website `www.super.franky.yyy.com`, dan dikarenakan pengunjung web server pasti akan bingung dengan randomnya images yang ada, maka Franky juga meminta untuk mengganti request gambar yang memiliki substring `“franky”` akan diarahkan menuju `franky.png`. Maka bantulah Luffy untuk membuat konfigurasi dns dan web server ini!
+
+
+### Jawaban Soal 17     
+**Server Skypie**   
+konfigurasi file `/var/www/super.franky.t07.com/.htaccess` dengan     
+```
+echo "
+RewriteEngine On
+RewriteCond %{REQUEST_URI} ^/public/images/(.*)franky(.*)
+RewriteCond %{REQUEST_URI} !/public/images/franky.png
+RewriteRule /.* http://super.franky.t07.com/public/images/franky.png [L]
+"
+```    
+konfigurasi file `/etc/apache2/sites-available/super.franky.t07.com.conf` dengan     
+```
+echo "
+<VirtualHost *:80>
+
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/super.franky.t07.com
+        ServerName super.franky.t07.com
+        ServerAlias www.super.franky.t07.com
+
+        ErrorDocument 404 /error/404.html
+        ErrorDocument 500 /error/404.html
+        ErrorDocument 502 /error/404.html
+        ErrorDocument 503 /error/404.html
+        ErrorDocument 504 /error/404.html
+
+        <Directory /var/www/super.franky.t07.com/public>
+                Options +Indexes
+        </Directory>
+
+        Alias \"/js\" \"/var/www/super.franky.t07.com/public/js\"
+
+        <Directory /var/www/super.franky.t07.com>
+                Options +FollowSymLinks -Multiviews
+                AllowOverride All
+        </Directory>
+        ErrorLog \${APACHE_LOG_DIR}/error.log
+        CustomLog \${APACHE_LOG_DIR}/access.log combined
+
+        <Directory /var/www/franky.t07.com>
+                Options +FollowSymLinks -Multiviews
+                AllowOverride All
+        </Directory>
+</VirtualHost>
+"
+```    
+Melakukan restart service apache2 dengan `service apache2 restart`  
+
 #### TESTING     
