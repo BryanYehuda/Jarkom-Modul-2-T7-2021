@@ -354,7 +354,6 @@ apt-get install ca-certificates openssl -y
 ```
 konfigurasi file `/etc/apache2/sites-available/franky.t07.com.conf`. DcumentRoot diletakkan  di /var/www/franky.t07.com. Jangan lupa untuk menambah servername dan serveralias  
 ```
-echo "
 <VirtualHost *:80>
 
         ServerAdmin webmaster@localhost
@@ -365,7 +364,6 @@ echo "
         ErrorLog \${APACHE_LOG_DIR}/error.log
         CustomLog \${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>
-" 
 ```
 Lalu lakukan membaut sebuah direkroti root untuk server franky.t07.com dan melakukan copy file content
 ```
@@ -399,7 +397,6 @@ RewriteRule (.*) /index.php/\$1 [L]
 Inti dari konfigurasi tersebut adalah kita melakukan cek apakah request tersebut adalah ke file atau bukan dan ke direktori atau bukan jika hal tersebut terpenuhi aka kita membuat rule untuk melakukan direct ke /index.php/home. $1 merupakan parameter yang diinputkan di url
 konfigurasi file `/etc/apache2/sites-available/franky.t07.com.conf` dengan  
 ```
-echo "
 <VirtualHost *:80>
         ServerAdmin webmaster@localhost
         DocumentRoot /var/www/franky.t07.com
@@ -414,7 +411,6 @@ echo "
                 AllowOverride All
         </Directory>
 </VirtualHost>
-"
 ```
 Melakukan restart service apache2 dengan `service apache2 restart`    
 
@@ -428,7 +424,6 @@ Setelah itu, pada subdomain `www.super.franky.yyy.com`, Luffy membutuhkan penyim
 **Server Skypie**    
 konfigurasi file `/etc/apache2/sites-available/super.franky.t07.com.conf` dengan  
 ```
-echo "
 <VirtualHost *:80>
 
         ServerAdmin webmaster@localhost
@@ -444,7 +439,6 @@ echo "
                 AllowOverride All
         </Directory>
 </VirtualHost>
-"
 ```
 Lalu aktifkan virtualhost dengan a2ensite, membuat direktori untuk documentroot di /var/www/super.franky.t07.com dan jangan lupa untuk melakukan copy content ke documentroot dengan cara
 ```
@@ -463,9 +457,9 @@ Akan tetapi, pada folder `/public`, Luffy ingin hanya dapat melakukan directory 
 
 ### Jawaban Soal 11
 **Server Skypie**    
-konfigurasi file `/etc/apache2/sites-available/super.franky.t07.com.conf` dengan  
+konfigurasi file `/etc/apache2/sites-available/super.franky.t07.com.conf` menamahkan Options +Indexes ke direktori yang ingin di directory list dengan  
 ```
-echo "
+
 <VirtualHost *:80>
 
         ServerAdmin webmaster@localhost
@@ -485,20 +479,21 @@ echo "
                 AllowOverride All
         </Directory>
 </VirtualHost>
-"
+
 ```     
 Melakukan restart service apache2 dengan `service apache2 restart`    
 
 #### TESTING
-
+lynx  www.super.franky.t07.com/public
+![](image/11-0-testing.png)
 ### SOAL 12
 Tidak hanya itu, Luffy juga menyiapkan error file `404.html` pada folder `/error` untuk mengganti error kode pada apache 
 
 ### Jawaban Soal 12
 **Server Skypie**    
-konfigurasi file `/etc/apache2/sites-available/super.franky.t07.com.conf` dengan  
+konfigurasi file `/etc/apache2/sites-available/super.franky.t07.com.conf` menambahkan konfigurasi ErrorDocumentuntuk setiap error yang ada yang diarahkan ke file /error/404.html dengan  
 ```
-echo "
+
 <VirtualHost *:80>
         ServerAdmin webmaster@localhost
         DocumentRoot /var/www/super.franky.t07.com
@@ -523,20 +518,20 @@ echo "
                 AllowOverride All
         </Directory>
 </VirtualHost>
-" 
+
 ```     
 Melakukan restart service apache2 dengan `service apache2 restart`   
 
 #### TESTING
-
+lynx  www.super.franky.t07.com/HAHAHA
+![](image/12-0-testing.png)
 ### SOAL 13
 Luffy juga meminta Nami untuk dibuatkan konfigurasi virtual host. Virtual host ini bertujuan untuk dapat mengakses file asset `www.super.franky.yyy.com/public/js` menjadi `www.super.franky.yyy.com/js`
 
 ### Jawaban Soal 13
 **Server Skypie**    
-konfigurasi file `/etc/apache2/sites-available/super.franky.t07.com.conf` dengan  
+konfigurasi file `/etc/apache2/sites-available/super.franky.t07.com.conf` menambahkan konfigurasi Alias dengan  
 ```
-echo "
 <VirtualHost *:80>
 
         ServerAdmin webmaster@localhost
@@ -565,20 +560,20 @@ echo "
                 AllowOverride All
         </Directory>
 </VirtualHost>
-"
 ```     
 Melakukan restart service apache2 dengan `service apache2 restart`   
 
 #### TESTING    
+lynx  www.super.franky.t07.com/js 
 
+![](image/13-0-testing.png)
 ### SOAL 14
 Dan Luffy meminta untuk web `www.general.mecha.franky.yyy.com` hanya bisa diakses dengan port 15000 dan port 15500
 
 ### Jawaban Soal 14
 **Server Skypie**    
-konfigurasi file `/etc/apache2/sites-available/general.mecha.franky.t07.com.conf` dengan  
+konfigurasi file `/etc/apache2/sites-available/general.mecha.franky.t07.com.conf` disini menambahkan CirtualHost baru yang berada pada port 15000 dan 15500 dengan  
 ```
-echo "
 <VirtualHost *:15000>
 
         ServerAdmin webmaster@localhost
@@ -600,7 +595,6 @@ echo "
         ErrorLog \${APACHE_LOG_DIR}/error.log
         CustomLog \${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>
-"
 ```     
 Lalu lakukan
 ```
@@ -611,15 +605,12 @@ cp -r /root/Praktikum-Modul-2-Jarkom/general.mecha.franky/. /var/www/general.mec
 ```
 konfigurasi file `/var/www/general.mecha.franky.t07.com/index.php` dengan     
 ```
-echo "
 <?php
     echo 'selamat 14';
 ?>
-"
 ```
-konfigurasi file `/etc/apache2/ports.conf` dengan     
+konfigurasi file `/etc/apache2/ports.conf` menambahkan Listen 15000 dan 15500 dengan     
 ```
-echo "
 # If you just change the port or add more ports here, you will likely also
 # have to change the VirtualHost statement in
 # /etc/apache2/sites-enabled/000-default.conf
@@ -634,12 +625,14 @@ Listen 15500
 <IfModule mod_gnutls.c>
         Listen 443
 </IfModule>
-" 
 ```    
 Melakukan restart service apache2 dengan `service apache2 restart`   
 
 #### TESTING   
+lynx  general.mecha.franky.t07.com:15000
 
+lynx  general.mecha.franky.t07.com:15500
+![](image/14-0-testing.png)
 ### SOAL 15
 dengan authentikasi username luffy dan password onepiece dan file di `/var/www/general.mecha.franky.yyy`
 
@@ -648,7 +641,6 @@ dengan authentikasi username luffy dan password onepiece dan file di `/var/www/g
 Jalankan Command `htpasswd -c -b /etc/apache2/.htpasswd luffy onepiece`    
 konfigurasi file `/etc/apache2/sites-available/general.mecha.franky.t07.com.conf` dengan     
 ```
-echo "
 <VirtualHost *:15000>
 
         ServerAdmin webmaster@localhost
@@ -682,7 +674,6 @@ echo "
         ErrorLog \${APACHE_LOG_DIR}/error.log
         CustomLog \${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>
-"
 ```    
 Melakukan restart service apache2 dengan `service apache2 restart`   
 
@@ -695,7 +686,6 @@ Dan setiap kali mengakses IP Skypie akan diahlikan secara otomatis ke `www.frank
 **Server Skypie**   
 konfigurasi file `/etc/apache2/sites-available/000-default.conf` dengan     
 ```
-echo "
 <VirtualHost *:80>
 
         ServerAdmin webmaster@localhost
@@ -709,12 +699,12 @@ echo "
         CustomLog \${APACHE_LOG_DIR}/access.log combined
 
 </VirtualHost>
-"
 ```    
 Melakukan restart service apache2 dengan `service apache2 restart`  
 
 #### TESTING     
-
+lynx 10.45.2.4
+![](image/16-0-testing.png)
 ### SOAL 17
 Dikarenakan Franky juga ingin mengajak temannya untuk dapat menghubunginya melalui website `www.super.franky.yyy.com`, dan dikarenakan pengunjung web server pasti akan bingung dengan randomnya images yang ada, maka Franky juga meminta untuk mengganti request gambar yang memiliki substring `“franky”` akan diarahkan menuju `franky.png`. Maka bantulah Luffy untuk membuat konfigurasi dns dan web server ini!
 
