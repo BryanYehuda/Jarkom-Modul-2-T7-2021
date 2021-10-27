@@ -328,7 +328,9 @@ www.general     IN      CNAME   mecha.franky.t07.com.
 Melakukan restart sevice bind9 dengan `service bind9 restart`
   
 #### TESTING  
-  
+![](image/7-0-testing.png)
+![](image/7-1-testing.png)
+![](image/7-2-testing.png)
 ### SOAL 8
 Setelah melakukan konfigurasi server, maka dilakukan konfigurasi Webserver. Pertama dengan webserver `www.franky.yyy.com.` Pertama, luffy membutuhkan webserver dengan DocumentRoot pada `/var/www/franky.yyy.com.`  
   
@@ -341,7 +343,7 @@ apt-get install lynx -y
 ```
   
 **Server Skypie**      
-Melakukan instalasi Apache dengan cara
+Melakukan instalasi Apache, php, openssl untuk melakukan download ke website https dengan cara
 ```
 apt-get install apache2 -y
 service apache2 start
@@ -350,7 +352,7 @@ apt-get install libapache2-mod-php7.0 -y
 service apache2 
 apt-get install ca-certificates openssl -y
 ```
-konfigurasi file `/etc/apache2/sites-available/franky.t07.com.conf` dengan
+konfigurasi file `/etc/apache2/sites-available/franky.t07.com.conf`. DcumentRoot diletakkan  di /var/www/franky.t07.com. Jangan lupa untuk menambah servername dan serveralias  
 ```
 echo "
 <VirtualHost *:80>
@@ -365,7 +367,7 @@ echo "
 </VirtualHost>
 " 
 ```
-Lalu lakukan
+Lalu lakukan membaut sebuah direkroti root untuk server franky.t07.com dan melakukan copy file content
 ```
 mkdir /var/www/franky.t07.com
 cp -r /root/Praktikum-Modul-2-Jarkom/franky/. /var/www/franky.t07.com
@@ -373,7 +375,12 @@ service apache2 restart
 ```
   
 #### TESTING  
+lynx franky.t07.com
 
+![](image/8-0-testing.png)
+
+lynx www.franky.t07.com
+![](image/8-1-testing.png)
 ### SOAL 9
 Setelah itu, Luffy juga membutuhkan agar url `www.franky.yyy.com/index.php/home` dapat menjadi menjadi `www.franky.yyy.com/home.`
 
@@ -389,6 +396,7 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule (.*) /index.php/\$1 [L]
 ```
+Inti dari konfigurasi tersebut adalah kita melakukan cek apakah request tersebut adalah ke file atau bukan dan ke direktori atau bukan jika hal tersebut terpenuhi aka kita membuat rule untuk melakukan direct ke /index.php/home. $1 merupakan parameter yang diinputkan di url
 konfigurasi file `/etc/apache2/sites-available/franky.t07.com.conf` dengan  
 ```
 echo "
@@ -411,7 +419,8 @@ echo "
 Melakukan restart service apache2 dengan `service apache2 restart`    
 
 #### TESTING
-
+lynx  www.franky.t07.com/home
+![](image/9-0-testing.png)
 ### SOAL 10
 Setelah itu, pada subdomain `www.super.franky.yyy.com`, Luffy membutuhkan penyimpanan aset yang memiliki DocumentRoot pada `/var/www/super.franky.yyy.com`
 
@@ -437,7 +446,7 @@ echo "
 </VirtualHost>
 "
 ```
-Lalu lakukan
+Lalu aktifkan virtualhost dengan a2ensite, membuat direktori untuk documentroot di /var/www/super.franky.t07.com dan jangan lupa untuk melakukan copy content ke documentroot dengan cara
 ```
 a2ensite super.franky.t07.com
 mkdir /var/www/super.franky.t07.com
@@ -447,7 +456,8 @@ service apache2 restart
 konfigurasi file `/var/www/super.franky.t07.com/index.php` dengan `echo "<?php echo 'yes nomor 10' ?>"`    
 
 #### TESTING
-
+lynx  www.super.franky.t07.com .Untuk membuktikan kita membuat sebuah file index.php didalamnya
+![](image/10-0-testing.png)
 ### SOAL 11
 Akan tetapi, pada folder `/public`, Luffy ingin hanya dapat melakukan directory listing saja   
 
