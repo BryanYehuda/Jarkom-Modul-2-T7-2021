@@ -93,8 +93,15 @@ echo "nameserver 10.45.2.2" > /etc/resolv.conf
 ```  
 
 #### TESTING  
+ping franky.t07.com
+
 ![](https://github.com/BryanYehuda/Jarkom-Modul-2-T7-2021/blob/main/image/1-0-testing.png?raw=true)  
+
+ping www.franky.t07.com
 ![](https://github.com/BryanYehuda/Jarkom-Modul-2-T7-2021/blob/main/image/1-1-testing.png?raw=true)  
+
+host -t CNAME www.franky.com
+
 ![](https://github.com/BryanYehuda/Jarkom-Modul-2-T7-2021/blob/main/image/testing-1-2-testing.png?raw=true)  
 
 ### SOAL 3  
@@ -121,9 +128,22 @@ www.super       IN      CNAME   franky.t07.com.
 Melakukan restart sevice bind9 dengan `service bind9 restart`  
   
 #### TESTING  
+
+ping super.franky.t07.com
 ![](https://github.com/BryanYehuda/Jarkom-Modul-2-T7-2021/blob/main/image/2-0-testing.png?raw=true)  
+
+
+ping www.super.franky.t07.com
+
 ![](https://github.com/BryanYehuda/Jarkom-Modul-2-T7-2021/blob/main/image/2-1-testing.png?raw=true)  
-  
+
+host -t A super.franky.t07.com
+
+![](image/2-2-testing.png)
+
+host -t CNAME www.super.franky.t07.com
+![](image/2-3-testing.png)
+
 ### SOAL 4   
 Buat juga reverse domain untuk domain utama  
   
@@ -163,7 +183,7 @@ Supaya tetap bisa menghubungi Franky jika server EniesLobby rusak, maka buat Wat
   
 ### Jawaban Soal 5  
 **Service Water7**  
-lakukan konfigurasi pada file `/etc/bind/named.conf.local` sebagai berikut:  
+lakukan konfigurasi pada file `/etc/bind/named.conf.local` sebagai berikut untuk melakukan konfigurasi DNS Slave yang mengarah ke water7:  
 ```  
 zone "franky.t07.com" {  
         type master;
@@ -195,8 +215,10 @@ zone "franky.t07.com" {
 Melakukan restart sevice bind9 dengan `service bind9 restart`  
 
 #### TESTING  
-Melakukan stop service bind9 dengan cara berikut pada server EniesLobby  
+Melakukan stop service bind9 dengan cara berikut pada server EniesLobby
+
 ![](https://github.com/BryanYehuda/Jarkom-Modul-2-T7-2021/blob/main/image/5-0-testing.png?raw=true)  
+
 Melakukan ping dengan server Longuetown  
 ![](https://github.com/BryanYehuda/Jarkom-Modul-2-T7-2021/blob/main/image/5-1-testing.png?raw=true)  
 
@@ -216,13 +238,12 @@ $TTL    604800
                         604800 )        ; Negative Cache TTL
 ;
 @               IN      NS      franky.t07.com.
-@               IN      A       10.45.2.2 ; IP EniesLobby
+@               IN      A       10.45.2.4 ; IP skypea
 www             IN      CNAME   franky.t07.com.
-super           IN      A       10.45.2.3 ; IP Water7
-www.super       IN      CNAME   franky.t07.com.
-ns1             IN      NS      10.45.2.3; IP Water7
-mecha           IN      NS      ns
-www.mecha   	IN  	CNAME   franky.t07.com.
+super           IN      A       10.45.2.4 ; IP skypea
+www.super       IN      CNAME   super.franky.t07.com.
+ns1             IN      A       10.45.2.3; IP Water7
+mecha           IN      NS      ns1
 ```  
 Kemudian edit file `/etc/bind/named.conf.options` dan comment `dnssec-validation auto;` dan tambahkan baris berikut pada `/etc/bind/named.conf.options`  
 ```  
@@ -279,7 +300,10 @@ www             IN      CNAME   mecha.franky.t07.com.
 ```  
 Melakukan restart sevice bind9 dengan `service bind9 restart`
 #### TESTING  
-  
+ping mecha.franky.t07.com
+![](image/6-0-testing.png)
+ping www.mecha.franky.t07.com
+![](image/6-1-testing.png)
 ### SOAL 7  
 Untuk memperlancar komunikasi Luffy dan rekannya, dibuatkan subdomain melalui Water7 dengan nama `general.mecha.franky.yyy.com` dengan alias `www.general.mecha.franky.yyy.com` yang mengarah ke Skypie  
   
@@ -287,7 +311,7 @@ Untuk memperlancar komunikasi Luffy dan rekannya, dibuatkan subdomain melalui Wa
 **Server Water7**  
 konfigurasi file `/etc/bind/sunnygo/mecha.franky.t07.com` dengan  
 ```
-\$TTL    604800
+$TTL    604800
 @       IN      SOA     mecha.franky.t07.com. root.mecha.franky.t07.com. (
                         2021100401      ; Serial
                         604800         ; Refresh
