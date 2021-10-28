@@ -4,7 +4,7 @@
 #### Nama Anggota Kelompok :      
 1. Naufal Aprilian (05311940000007)     
 2. Bryan Yehuda Mannuel (05311940000021)      
-3. Mulki Kusumah      
+3. Mulki Kusumah (05311940000043)     
       
 ## Pembukaan Soal         
 Luffy adalah seorang yang akan jadi Raja Bajak Laut. Demi membuat Luffy menjadi Raja Bajak Laut, Nami ingin membuat sebuah peta, bantu Nami untuk membuat peta berikut:    
@@ -759,5 +759,7 @@ echo "
 Melakukan restart service apache2 dengan `service apache2 restart`  
 
 #### TESTING     
-
+lynx super.franky.t07.com/public/images/HAHAfrankyYUHU
+![](image/17-0-testing.png)
+![](image/17-1-testing.png)
 ## Kendala
