@@ -4,7 +4,7 @@
 #### Nama Anggota Kelompok :      
 1. Naufal Aprilian (05311940000007)     
 2. Bryan Yehuda Mannuel (05311940000021)      
-3. Mulki Kusumah      
+3. Mulki Kusumah (05311940000043)     
       
 ## Pembukaan Soal         
 Luffy adalah seorang yang akan jadi Raja Bajak Laut. Demi membuat Luffy menjadi Raja Bajak Laut, Nami ingin membuat sebuah peta, bantu Nami untuk membuat peta berikut:    
@@ -98,6 +98,7 @@ ping franky.t07.com
 ![](https://github.com/BryanYehuda/Jarkom-Modul-2-T7-2021/blob/main/image/1-0-testing.png?raw=true)  
 
 ping www.franky.t07.com
+
 ![](https://github.com/BryanYehuda/Jarkom-Modul-2-T7-2021/blob/main/image/1-1-testing.png?raw=true)  
 
 host -t CNAME www.franky.com
@@ -123,13 +124,14 @@ $TTL    604800
 @               IN      A       10.45.2.2 ; IP EniesLobby
 www             IN      CNAME   franky.t07.com.
 super           IN      A       10.45.2.4 ; IP skype
-www.super       IN      CNAME   franky.t07.com.
+www.super       IN      CNAME   super.franky.t07.com.
 ```
 Melakukan restart sevice bind9 dengan `service bind9 restart`  
   
 #### TESTING  
 
 ping super.franky.t07.com
+
 ![](https://github.com/BryanYehuda/Jarkom-Modul-2-T7-2021/blob/main/image/2-0-testing.png?raw=true)  
 
 
@@ -142,6 +144,7 @@ host -t A super.franky.t07.com
 ![](image/2-2-testing.png)
 
 host -t CNAME www.super.franky.t07.com
+
 ![](image/2-3-testing.png)
 
 ### SOAL 4   
@@ -220,6 +223,7 @@ Melakukan stop service bind9 dengan cara berikut pada server EniesLobby
 ![](https://github.com/BryanYehuda/Jarkom-Modul-2-T7-2021/blob/main/image/5-0-testing.png?raw=true)  
 
 Melakukan ping dengan server Longuetown  
+
 ![](https://github.com/BryanYehuda/Jarkom-Modul-2-T7-2021/blob/main/image/5-1-testing.png?raw=true)  
 
 ### SOAL 6  
@@ -301,8 +305,10 @@ www             IN      CNAME   mecha.franky.t07.com.
 Melakukan restart sevice bind9 dengan `service bind9 restart`
 #### TESTING  
 ping mecha.franky.t07.com
+
 ![](image/6-0-testing.png)
 ping www.mecha.franky.t07.com
+
 ![](image/6-1-testing.png)
 ### SOAL 7  
 Untuk memperlancar komunikasi Luffy dan rekannya, dibuatkan subdomain melalui Water7 dengan nama `general.mecha.franky.yyy.com` dengan alias `www.general.mecha.franky.yyy.com` yang mengarah ke Skypie  
@@ -329,8 +335,11 @@ Melakukan restart sevice bind9 dengan `service bind9 restart`
   
 #### TESTING  
 ![](image/7-0-testing.png)
+
 ![](image/7-1-testing.png)
+
 ![](image/7-2-testing.png)
+
 ### SOAL 8
 Setelah melakukan konfigurasi server, maka dilakukan konfigurasi Webserver. Pertama dengan webserver `www.franky.yyy.com.` Pertama, luffy membutuhkan webserver dengan DocumentRoot pada `/var/www/franky.yyy.com.`  
   
@@ -378,6 +387,7 @@ lynx franky.t07.com
 ![](image/8-0-testing.png)
 
 lynx www.franky.t07.com
+
 ![](image/8-1-testing.png)
 ### SOAL 9
 Setelah itu, Luffy juga membutuhkan agar url `www.franky.yyy.com/index.php/home` dapat menjadi menjadi `www.franky.yyy.com/home.`
@@ -416,6 +426,7 @@ Melakukan restart service apache2 dengan `service apache2 restart`
 
 #### TESTING
 lynx  www.franky.t07.com/home
+
 ![](image/9-0-testing.png)
 ### SOAL 10
 Setelah itu, pada subdomain `www.super.franky.yyy.com`, Luffy membutuhkan penyimpanan aset yang memiliki DocumentRoot pada `/var/www/super.franky.yyy.com`
@@ -451,6 +462,7 @@ konfigurasi file `/var/www/super.franky.t07.com/index.php` dengan `echo "<?php e
 
 #### TESTING
 lynx  www.super.franky.t07.com .Untuk membuktikan kita membuat sebuah file index.php didalamnya
+
 ![](image/10-0-testing.png)
 ### SOAL 11
 Akan tetapi, pada folder `/public`, Luffy ingin hanya dapat melakukan directory listing saja   
@@ -485,7 +497,9 @@ Melakukan restart service apache2 dengan `service apache2 restart`
 
 #### TESTING
 lynx  www.super.franky.t07.com/public
+
 ![](image/11-0-testing.png)
+
 ### SOAL 12
 Tidak hanya itu, Luffy juga menyiapkan error file `404.html` pada folder `/error` untuk mengganti error kode pada apache 
 
@@ -524,6 +538,7 @@ Melakukan restart service apache2 dengan `service apache2 restart`
 
 #### TESTING
 lynx  www.super.franky.t07.com/HAHAHA
+
 ![](image/12-0-testing.png)
 ### SOAL 13
 Luffy juga meminta Nami untuk dibuatkan konfigurasi virtual host. Virtual host ini bertujuan untuk dapat mengakses file asset `www.super.franky.yyy.com/public/js` menjadi `www.super.franky.yyy.com/js`
@@ -632,6 +647,7 @@ Melakukan restart service apache2 dengan `service apache2 restart`
 lynx  general.mecha.franky.t07.com:15000
 
 lynx  general.mecha.franky.t07.com:15500
+
 ![](image/14-0-testing.png)
 ### SOAL 15
 dengan authentikasi username luffy dan password onepiece dan file di `/var/www/general.mecha.franky.yyy`
@@ -704,6 +720,7 @@ Melakukan restart service apache2 dengan `service apache2 restart`
 
 #### TESTING     
 lynx 10.45.2.4
+
 ![](image/16-0-testing.png)
 ### SOAL 17
 Dikarenakan Franky juga ingin mengajak temannya untuk dapat menghubunginya melalui website `www.super.franky.yyy.com`, dan dikarenakan pengunjung web server pasti akan bingung dengan randomnya images yang ada, maka Franky juga meminta untuk mengganti request gambar yang memiliki substring `“franky”` akan diarahkan menuju `franky.png`. Maka bantulah Luffy untuk membuat konfigurasi dns dan web server ini!
@@ -759,5 +776,9 @@ echo "
 Melakukan restart service apache2 dengan `service apache2 restart`  
 
 #### TESTING     
+lynx super.franky.t07.com/public/images/HAHAfrankyYUHU
 
+![](image/17-0-testing.png)
+![](image/17-1-testing.png)
 ## Kendala
+Tidak ada
