@@ -777,14 +777,8 @@ Melakukan restart service apache2 dengan `service apache2 restart`
 
 #### TESTING     
 lynx super.franky.t07.com/public/images/HAHAfrankyYUHU
-<<<<<<< HEAD
 
 ![](image/17-0-testing.png)
 ![](image/17-1-testing.png)
 ## Kendala
-Tidak ada
-=======
-![](image/17-0-testing.png)
-![](image/17-1-testing.png)
-## Kendala
->>>>>>> 4d207df7701cf86fee499996bfc0e52ac7c56d99
+Tidak Ada
