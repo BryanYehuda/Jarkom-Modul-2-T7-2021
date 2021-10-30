@@ -257,6 +257,10 @@ apt-get install php -y
 apt-get install libapache2-mod-php7.0 -y
 service apache2 
 apt-get install ca-certificates openssl -y
+apt-get install git -y
+apt-get install unzip -y
+git clone https://github.com/FeinardSlim/Praktikum-Modul-2-Jarkom.git
+unzip -o /root/Praktikum-Modul-2-Jarkom/\*.zip -d /root/Praktikum-Modul-2-Jarkom
 echo "
 <VirtualHost *:80>
 
