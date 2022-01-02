@@ -14,7 +14,7 @@ EniesLobby akan dijadikan sebagai DNS Master, Water7 akan dijadikan DNS Slave, d
          
 ## Jawaban Modul          
          
-### Soal 1         
+## Soal 1         
 EniesLobby akan dijadikan sebagai DNS Master, Water7 akan dijadikan DNS Slave, dan Skypie akan digunakan sebagai Web Server. Terdapat 2 Client yaitu Loguetown, dan Alabasta. Semua node terhubung pada router Foosha, sehingga dapat mengakses internet       
     
 ### Jawaban Soal 1      
@@ -55,7 +55,7 @@ echo "nameserver 192.168.122.1" > /etc/resolv.conf
           
 Kemudian setiap node diaktifkan dengan mengklik tombol start. Setelah itu, menjalankan command `iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE -s 10.45.0.0/16` pada router Foosha upaya dapat terkoneksi dengan internet.         
 
-### SOAL 2   
+## SOAL 2   
 Luffy ingin menghubungi Franky yang berada di EniesLobby dengan denden mushi. Kalian diminta Luffy untuk membuat website utama dengan mengakses `franky.yyy.com` dengan alias `www.franky.yyy.com` pada folder kaizoku  
 
 ### Jawaban Soal 2  
@@ -105,7 +105,7 @@ host -t CNAME www.franky.com
 
 ![](https://github.com/BryanYehuda/Jarkom-Modul-2-T7-2021/blob/main/image/testing-1-2-testing.png?raw=true)  
 
-### SOAL 3  
+## SOAL 3  
 Setelah itu buat subdomain `super.franky.yyy.com` dengan alias `www.super.franky.yyy.com` yang diatur DNS nya di EniesLobby dan mengarah ke Skypie(3).  
   
 ### Jawaban Soal 3  
@@ -147,7 +147,7 @@ host -t CNAME www.super.franky.t07.com
 
 ![](image/2-3-testing.png)
 
-### SOAL 4   
+## SOAL 4   
 Buat juga reverse domain untuk domain utama  
   
 ### Jawaban Soal 4  
@@ -181,7 +181,7 @@ $TTL    604800
 #### TESTING  
 ![](https://github.com/BryanYehuda/Jarkom-Modul-2-T7-2021/blob/main/image/3-0-testing.png?raw=true)  
   
-### SOAL 5  
+## SOAL 5  
 Supaya tetap bisa menghubungi Franky jika server EniesLobby rusak, maka buat Water7 sebagai DNS Slave untuk domain utama  
   
 ### Jawaban Soal 5  
@@ -226,7 +226,7 @@ Melakukan ping dengan server Longuetown
 
 ![](https://github.com/BryanYehuda/Jarkom-Modul-2-T7-2021/blob/main/image/5-1-testing.png?raw=true)  
 
-### SOAL 6  
+## SOAL 6  
 Setelah itu terdapat subdomain `mecha.franky.yyy.com` dengan alias `www.mecha.franky.yyy.com` yang didelegasikan dari EniesLobby ke Water7 dengan IP menuju ke Skypie dalam folder sunnygo  
   
 ### Jawaban Soal 6  
@@ -310,7 +310,7 @@ ping mecha.franky.t07.com
 ping www.mecha.franky.t07.com
 
 ![](image/6-1-testing.png)
-### SOAL 7  
+## SOAL 7  
 Untuk memperlancar komunikasi Luffy dan rekannya, dibuatkan subdomain melalui Water7 dengan nama `general.mecha.franky.yyy.com` dengan alias `www.general.mecha.franky.yyy.com` yang mengarah ke Skypie  
   
 ### Jawaban Soal 7   
@@ -340,7 +340,7 @@ Melakukan restart sevice bind9 dengan `service bind9 restart`
 
 ![](image/7-2-testing.png)
 
-### SOAL 8
+## SOAL 8
 Setelah melakukan konfigurasi server, maka dilakukan konfigurasi Webserver. Pertama dengan webserver `www.franky.yyy.com.` Pertama, luffy membutuhkan webserver dengan DocumentRoot pada `/var/www/franky.yyy.com.`  
   
 ### Jawaban Soal 8     
@@ -389,7 +389,7 @@ lynx franky.t07.com
 lynx www.franky.t07.com
 
 ![](image/8-1-testing.png)
-### SOAL 9
+## SOAL 9
 Setelah itu, Luffy juga membutuhkan agar url `www.franky.yyy.com/index.php/home` dapat menjadi menjadi `www.franky.yyy.com/home.`
 
 ### Jawaban Soal 9
@@ -428,7 +428,7 @@ Melakukan restart service apache2 dengan `service apache2 restart`
 lynx  www.franky.t07.com/home
 
 ![](image/9-0-testing.png)
-### SOAL 10
+## SOAL 10
 Setelah itu, pada subdomain `www.super.franky.yyy.com`, Luffy membutuhkan penyimpanan aset yang memiliki DocumentRoot pada `/var/www/super.franky.yyy.com`
 
 ### Jawaban Soal 10
@@ -464,7 +464,7 @@ konfigurasi file `/var/www/super.franky.t07.com/index.php` dengan `echo "<?php e
 lynx  www.super.franky.t07.com .Untuk membuktikan kita membuat sebuah file index.php didalamnya
 
 ![](image/10-0-testing.png)
-### SOAL 11
+## SOAL 11
 Akan tetapi, pada folder `/public`, Luffy ingin hanya dapat melakukan directory listing saja   
 
 ### Jawaban Soal 11
@@ -500,7 +500,7 @@ lynx  www.super.franky.t07.com/public
 
 ![](image/11-0-testing.png)
 
-### SOAL 12
+## SOAL 12
 Tidak hanya itu, Luffy juga menyiapkan error file `404.html` pada folder `/error` untuk mengganti error kode pada apache 
 
 ### Jawaban Soal 12
@@ -540,7 +540,7 @@ Melakukan restart service apache2 dengan `service apache2 restart`
 lynx  www.super.franky.t07.com/HAHAHA
 
 ![](image/12-0-testing.png)
-### SOAL 13
+## SOAL 13
 Luffy juga meminta Nami untuk dibuatkan konfigurasi virtual host. Virtual host ini bertujuan untuk dapat mengakses file asset `www.super.franky.yyy.com/public/js` menjadi `www.super.franky.yyy.com/js`
 
 ### Jawaban Soal 13
@@ -582,7 +582,7 @@ Melakukan restart service apache2 dengan `service apache2 restart`
 lynx  www.super.franky.t07.com/js 
 
 ![](image/13-0-testing.png)
-### SOAL 14
+## SOAL 14
 Dan Luffy meminta untuk web `www.general.mecha.franky.yyy.com` hanya bisa diakses dengan port 15000 dan port 15500
 
 ### Jawaban Soal 14
@@ -649,7 +649,7 @@ lynx  general.mecha.franky.t07.com:15000
 lynx  general.mecha.franky.t07.com:15500
 
 ![](image/14-0-testing.png)
-### SOAL 15
+## SOAL 15
 dengan authentikasi username luffy dan password onepiece dan file di `/var/www/general.mecha.franky.yyy`
 
 ### Jawaban Soal 15   
@@ -695,7 +695,7 @@ Melakukan restart service apache2 dengan `service apache2 restart`
 
 #### TESTING     
 
-### SOAL 16
+## SOAL 16
 Dan setiap kali mengakses IP Skypie akan diahlikan secara otomatis ke `www.franky.yyy.com`
 
 ### Jawaban Soal 16  
@@ -722,7 +722,7 @@ Melakukan restart service apache2 dengan `service apache2 restart`
 lynx 10.45.2.4
 
 ![](image/16-0-testing.png)
-### SOAL 17
+## SOAL 17
 Dikarenakan Franky juga ingin mengajak temannya untuk dapat menghubunginya melalui website `www.super.franky.yyy.com`, dan dikarenakan pengunjung web server pasti akan bingung dengan randomnya images yang ada, maka Franky juga meminta untuk mengganti request gambar yang memiliki substring `“franky”` akan diarahkan menuju `franky.png`. Maka bantulah Luffy untuk membuat konfigurasi dns dan web server ini!
 
 
@@ -780,5 +780,6 @@ lynx super.franky.t07.com/public/images/HAHAfrankyYUHU
 
 ![](image/17-0-testing.png)
 ![](image/17-1-testing.png)
+  
 ## Kendala
 Tidak Ada
